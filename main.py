@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, accuracy_score
 
 # Import Dataset
 dataset = pd.read_csv("Social_Network_Ads.csv")
@@ -22,6 +23,16 @@ X_test = sc.transform(X_test)
 classified = KNeighborsClassifier()
 classified.fit(X_train, y_train)
 
+# Predicting a new training set result
 print(classified.predict([[32, 150000]]))
+
+# Predicting a Test Set Result
+y_pred = classified.predict(X_test)
+print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1)), 1))
+
+# Making a confusion Matrix
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+print(accuracy_score(y_test, y_pred))
 
 
